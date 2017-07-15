@@ -15,9 +15,9 @@ export default class App extends React.Component {
         <Button
           raised
           icon={{name: 'home', size: 32}}
-          buttonStyle={{backgroundColor: 'blue', borderRadius: 10}}
+          buttonStyle={{backgroundColor: 'red', borderRadius: 10}}
           textStyle={{textAlign: 'center'}}
-          title={`Push Me`}
+          title={`Push Me`}          
         />
       </View>
     );
