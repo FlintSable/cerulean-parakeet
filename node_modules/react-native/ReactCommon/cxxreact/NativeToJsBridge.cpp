@@ -124,21 +124,27 @@ void NativeToJsBridge::callFunction(
   int systraceCookie = -1;
   #ifdef WITH_FBSYSTRACE
   systraceCookie = m_systraceCookie++;
+  std::string tracingName = fbsystrace_is_tracing(TRACE_TAG_REACT_CXX_BRIDGE) ?
+    folly::to<std::string>("JSCall__", module, '_', method) : std::string();
+  SystraceSection s(tracingName.c_str());
   FbSystraceAsyncFlow::begin(
       TRACE_TAG_REACT_CXX_BRIDGE,
-      "JSCall",
+      tracingName.c_str(),
       systraceCookie);
+  #else
+  std::string tracingName;
   #endif
 
-  runOnExecutorQueue([module = std::move(module), method = std::move(method), arguments = std::move(arguments), systraceCookie]
+  runOnExecutorQueue([module = std::move(module), method = std::move(method), arguments = std::move(arguments), tracingName = std::move(tracingName), systraceCookie]
     (JSExecutor* executor) {
       #ifdef WITH_FBSYSTRACE
       FbSystraceAsyncFlow::end(
           TRACE_TAG_REACT_CXX_BRIDGE,
-          "JSCall",
+          tracingName.c_str(),
           systraceCookie);
-      SystraceSection s("NativeToJsBridge::callFunction", "module", module, "method", method);
+      SystraceSection s(tracingName.c_str());
       #endif
+
       // This is safe because we are running on the executor's thread: it won't
       // destruct until after it's been unregistered (which we check above) and
       // that will happen on this thread
@@ -163,8 +169,9 @@ void NativeToJsBridge::invokeCallback(double callbackId, folly::dynamic&& argume
           TRACE_TAG_REACT_CXX_BRIDGE,
           "<callback>",
           systraceCookie);
-      SystraceSection s("NativeToJsBridge::invokeCallback");
+      SystraceSection s("NativeToJsBridge.invokeCallback");
       #endif
+
       executor->invokeCallback(callbackId, arguments);
     });
 }

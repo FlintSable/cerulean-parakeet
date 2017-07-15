@@ -32,15 +32,17 @@ class Instance {
 
   void setSourceURL(std::string sourceURL);
 
-  void loadScriptFromString(
-    std::unique_ptr<const JSBigString> string,
-    std::string sourceURL,
-    bool loadSynchronously);
+  void loadScriptFromString(std::unique_ptr<const JSBigString> string, std::string sourceURL);
+  void loadScriptFromStringSync(std::unique_ptr<const JSBigString> string, std::string sourceURL);
+  void loadScriptFromFile(const std::string& filename, const std::string& sourceURL);
   void loadUnbundle(
     std::unique_ptr<JSModulesUnbundle> unbundle,
     std::unique_ptr<const JSBigString> startupScript,
-    std::string startupScriptSourceURL,
-    bool loadSynchronously);
+    std::string startupScriptSourceURL);
+  void loadUnbundleSync(
+    std::unique_ptr<JSModulesUnbundle> unbundle,
+    std::unique_ptr<const JSBigString> startupScript,
+    std::string startupScriptSourceURL);
   bool supportsProfiling();
   void startProfiler(const std::string& title);
   void stopProfiler(const std::string& title, const std::string& filename);
@@ -62,14 +64,6 @@ class Instance {
 
  private:
   void callNativeModules(folly::dynamic&& calls, bool isEndOfBatch);
-  void loadApplication(
-    std::unique_ptr<JSModulesUnbundle> unbundle,
-    std::unique_ptr<const JSBigString> startupScript,
-    std::string startupScriptSourceURL);
-  void loadApplicationSync(
-    std::unique_ptr<JSModulesUnbundle> unbundle,
-    std::unique_ptr<const JSBigString> startupScript,
-    std::string startupScriptSourceURL);
 
   std::shared_ptr<InstanceCallback> callback_;
   std::unique_ptr<NativeToJsBridge> nativeToJsBridge_;
