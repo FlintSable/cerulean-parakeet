@@ -1,9 +1,22 @@
 import Expo from 'expo';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {Text,
+        TouchableHighlight,
+        Modal,
+        StyleSheet,
+        Button,
+        CameraRoll,
+        Image,
+        Dimensions,
+        ScrollView,
+        RefreshControl
+        } from 'react-native';
 import firebase from 'firebase';
-import SignUpForm from './components/SignUpForm';
-import SignInForm from './components/SignInForm';
+// import {Map} from './components/Map';
+
+import Header from './src/components/ui/Header'
+
+
 
 class App extends React.Component {
   componentDidMount() {
@@ -19,8 +32,7 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <SignUpForm />
-        <SignInForm />
+        <Header headerText={'Cerulean Parakeet'} />
       </View>
     );
   }
