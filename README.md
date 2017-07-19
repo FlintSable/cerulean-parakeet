@@ -1,9 +1,9 @@
 # cerulean-parakeet
 Action Adventure Tea and Toastin Jam Session
 
-####npm install -g exp <br/>
-####npm install <br/>
-####exp start <br/>
+npm install -g exp <br/>
+npm install <br/>
+exp start <br/>
 
 [![Foo](https://media.giphy.com/media/17l9djcGkP5kI/giphy.gif?response_id=5924ff2e9dfe3efac597c19d)]
 
