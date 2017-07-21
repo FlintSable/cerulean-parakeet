@@ -13,6 +13,7 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import ImagePicker from '../screens/ImagePicker';
 import MapView from '../screens/MapView';
+import CameraRollScreen from '../screens/CameraRollScreen';
 
 export default TabNavigator(
   {
@@ -23,7 +24,8 @@ export default TabNavigator(
       screen: MapView,
     },
     Settings: {
-      screen: ImagePicker,
+      //screen: ImagePicker,
+      screen: CameraRollScreen,
     },
   },
   {
